@@ -1,0 +1,35 @@
+name: Engelli Haber Botu
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # 30 dakikada bir çalışır
+  workflow_dispatch:         # manuel çalıştırma butonu
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run bot
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: python bot.py
+
+      - name: Commit seen.json updates
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add seen.json
+          git commit -m "Update seen" || echo "No changes"
+          git push
