@@ -15,17 +15,33 @@ CHAT_ID = os.getenv("CHAT_ID")  # ör: @engelhaberleri
 
 # RSS listesi (başlangıç için örnek; sen sonra çoğaltırsın)
 RSS_URLS = [
-    # İstanbul + engelli / erişilebilirlik / paralimpik - son 1 saat
+
+    # Google News - İstanbul + engelli (son 1 saat)
     "https://news.google.com/rss/search?q=%C4%B0stanbul+engelli+when%3A1h&hl=tr&gl=TR&ceid=TR:tr",
     "https://news.google.com/rss/search?q=%C4%B0stanbul+eri%C5%9Filebilirlik+when%3A1h&hl=tr&gl=TR&ceid=TR:tr",
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+paralimpik+when%3A1h&hl=tr&gl=TR&ceid=TR:tr",
     "https://news.google.com/rss/search?q=%C4%B0stanbul+tekerlekli+sandalye+when%3A1h&hl=tr&gl=TR&ceid=TR:tr",
+
+    # Son 24 saat (yedek - daha fazla haber)
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+engelli+when%3A24h&hl=tr&gl=TR&ceid=TR:tr",
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+engelli+belediye+when%3A24h&hl=tr&gl=TR&ceid=TR:tr",
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+eri%C5%9Filebilirlik+belediye+when%3A24h&hl=tr&gl=TR&ceid=TR:tr",
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+engelli+proje+when%3A24h&hl=tr&gl=TR&ceid=TR:tr",
+
+    # Spesifik konular
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+g%C3%B6rme+engelli+when%3A24h&hl=tr&gl=TR&ceid=TR:tr",
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+i%C5%9Fitme+engelli+when%3A24h&hl=tr&gl=TR&ceid=TR:tr",
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+down+sendromu+when%3A24h&hl=tr&gl=TR&ceid=TR:tr",
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+otizm+when%3A24h&hl=tr&gl=TR&ceid=TR:tr",
+
 ]
 
 # Paylaşım filtresi (pozitif anahtar kelimeler)
 KEYWORDS = [
     "engelli", "erişilebilir", "tekerlekli", "otizm", "down sendrom",
     "görme engelli", "işitme engelli", "paralimpik", "rehabilitasyon",
-    "özel eğitim", "ekpss", "engelli maaşı"
+    "özel eğitim", "engelli maaşı", "engelli hak", "erişim", "rampa",
+    "belediye", "proje", "destek", "erişilebilirlik"
 ]
 
 SEEN_FILE = "seen.json"
