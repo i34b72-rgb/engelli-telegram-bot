@@ -29,7 +29,7 @@ KEYWORDS = [
 ]
 
 SEEN_FILE = "seen.json"
-MAX_POSTS_PER_RUN = 5  # her çalıştırmada en fazla kaç haber atsın
+MAX_POSTS_PER_RUN = 2  # her çalıştırmada en fazla kaç haber atsın
 
 
 def normalize_text(s: str) -> str:
@@ -143,10 +143,10 @@ def main():
             posted += 1
             time.sleep(1.2)  # Telegram rate-limit'e takılma
 
-            if posted >= MAX_POSTS_PER_RUN: 2
+            if posted >= MAX_POSTS_PER_RUN: 
                 break
 
-        if posted >= MAX_POSTS_PER_RUN: 2
+        if posted >= MAX_POSTS_PER_RUN: 
             break
 
     save_seen(seen)
