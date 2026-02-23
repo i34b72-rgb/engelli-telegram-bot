@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 
 import feedparser
 import requests
+from html import escape
 
 # ====== AYARLAR ======
 # Telegram
@@ -68,6 +69,8 @@ def telegram_send_message(text: str):
         "disable_web_page_preview": False
     }
     r = requests.post(url, json=payload, timeout=30)
+    if not r.ok:
+        print("Telegram error:", r.status_code, r.text)  # <-- log'a düşer
     r.raise_for_status()
 
 
@@ -81,18 +84,20 @@ def format_message(entry):
     if len(short) > 350:
         short = short[:347].rstrip() + "..."
 
+    # Telegram HTML parse için kaçış
+    safe_title = escape(title)
+    safe_short = escape(short)
+    safe_link = escape(link)
+
     # tarih
     published = entry.get("published", "")
-    if published:
-        pub = published
-    else:
-        pub = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    pub = published if published else datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
     msg = (
-        f"<b>{title}</b>\n"
-        f"<i>{pub}</i>\n\n"
-        f"{short}\n\n"
-        f"Devamı: {link}"
+        f"<b>{safe_title}</b>\n"
+        f"<i>{escape(pub)}</i>\n\n"
+        f"{safe_short}\n\n"
+        f'<a href="{safe_link}">Devamını oku</a>'
     )
     return msg
 
