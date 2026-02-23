@@ -15,10 +15,10 @@ CHAT_ID = os.getenv("CHAT_ID")  # ör: @engelhaberleri
 
 # RSS listesi (başlangıç için örnek; sen sonra çoğaltırsın)
 RSS_URLS = [
-    # Google News RSS: "engelli" araması (TR)
-    "https://news.google.com/rss/search?q=engelli&hl=tr&gl=TR&ceid=TR:tr",
-    "https://news.google.com/rss/search?q=eri%C5%9Filebilirlik&hl=tr&gl=TR&ceid=TR:tr",
-    "https://news.google.com/rss/search?q=paralimpik&hl=tr&gl=TR&ceid=TR:tr",
+    # İstanbul + engelli / erişilebilirlik / paralimpik - son 1 saat
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+engelli+when%3A1h&hl=tr&gl=TR&ceid=TR:tr",
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+eri%C5%9Filebilirlik+when%3A1h&hl=tr&gl=TR&ceid=TR:tr",
+    "https://news.google.com/rss/search?q=%C4%B0stanbul+tekerlekli+sandalye+when%3A1h&hl=tr&gl=TR&ceid=TR:tr",
 ]
 
 # Paylaşım filtresi (pozitif anahtar kelimeler)
@@ -57,6 +57,13 @@ def save_seen(seen_set):
 
 def matches_keywords(title: str, summary: str) -> bool:
     text = normalize_text(title) + " " + normalize_text(summary)
+
+    # 1) İstanbul şart
+    # Türkçe i/İ bazen farklı unicode gelir, iki türlü de kontrol ediyoruz.
+    if "istanbul" not in text and "i̇stanbul" not in text:
+        return False
+
+    # 2) Engelli teması şart
     return any(k in text for k in KEYWORDS)
 
 
@@ -136,10 +143,10 @@ def main():
             posted += 1
             time.sleep(1.2)  # Telegram rate-limit'e takılma
 
-            if posted >= MAX_POSTS_PER_RUN:
+            if posted >= MAX_POSTS_PER_RUN: 2
                 break
 
-        if posted >= MAX_POSTS_PER_RUN:
+        if posted >= MAX_POSTS_PER_RUN: 2
             break
 
     save_seen(seen)
